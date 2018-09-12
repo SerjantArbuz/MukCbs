@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="layout_8dp">8dp</dimen>
+    <dimen name="layout_4dp">4dp</dimen>
+    <dimen name="layout_2dp">2dp</dimen>
+    <dimen name="layout_1dp">1dp</dimen>
+
+    <dimen name="text_18sp">18sp</dimen>
+    <dimen name="text_16sp">16sp</dimen>
+
+    <dimen name="elevation_4dp">4dp</dimen>
+    <dimen name="elevation_0dp">0dp</dimen>
+
+    <dimen name="radius_2dp">2dp</dimen>
+
+    <integer name="length_search">50</integer>
+
+</resources>

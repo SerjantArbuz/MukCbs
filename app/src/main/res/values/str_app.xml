@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Электронный Каталог (МУК:ЦБС)</string>
+
+
+    <!-- Search enter and dialog -->
+    <string name="search_hint">Что мы ищем?</string>
+
+    <string-array name="search_place">
+        <item>Заглавие</item>
+        <item>Публикация</item>
+        <item>Серия</item>
+        <item>Содержание</item>
+        <item>Автор</item>
+    </string-array>
+
+    <string name="dlg_title_place">Место поиска</string>
+    <string name="dlg_btn_accept">Применить</string>
+    <string name="dlg_btn_cancel">Отмена</string>
+
+
+    <!-- Book -->
+    <string name="book_volume_0">Однотомное издание</string>
+    <string name="book_volume_1">Многотомное издание</string>
+    <string name="book_title">Заглавие:</string>
+    <string name="book_place">Публикации:</string>
+    <string name="book_pages">Страниц:</string>
+    <string name="book_series">Серия:</string>
+    <string name="book_annotation">Содержание:</string>
+    <string name="book_author">Автор:</string>
+    <string name="book_co_author">Соавтор:</string>
+    <string name="book_editor">Редактор:</string>
+    <string name="book_collective">Коллектив:</string>
+    <string name="book_storage">Экземпляры:</string>
+    <string name="book_hash">Хеш:</string>
+
+</resources>

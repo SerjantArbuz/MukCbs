@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BookPreview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="BookPreview.Container">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="BookPreview.Text">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">@dimen/text_16sp</item>
+        <item name="android:padding">@dimen/layout_4dp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="BookMore">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="BookMore.Container">
+        <item name="android:padding">@dimen/layout_4dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="BookMore.Text">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">@dimen/text_16sp</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+    <style name="BookMore.Text.Title">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

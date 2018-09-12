@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.2'
+    defaultConfig {
+        applicationId "sgtmelon.mukcbs"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def ret_ver = "2.1.0"
+    
+    implementation "com.squareup.retrofit2:retrofit:$ret_ver"
+    implementation "com.squareup.retrofit2:converter-gson:$ret_ver"
+
+    def x_ver = "1.0.0-rc02"
+
+    implementation "androidx.appcompat:appcompat:$x_ver"
+    implementation "androidx.cardview:cardview:$x_ver"
+
+    implementation "androidx.legacy:legacy-support-v4:$x_ver"
+
+    implementation "androidx.vectordrawable:vectordrawable:$x_ver"
+    implementation "androidx.vectordrawable:vectordrawable-animated:$x_ver"
+
+    implementation "com.google.android.material:material:$x_ver"
+
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+}

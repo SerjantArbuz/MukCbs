@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="stSearch"
+            type="sgtmelon.mukcbs.office.st.StSearch" />
+
+    </data>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:elevation="@dimen/elevation_0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.AppBarLight"
+            app:popupTheme="@style/AppTheme.AppBarLight"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_8dp"
+                app:cardCornerRadius="@dimen/radius_2dp"
+                app:cardBackgroundColor="@color/colorBackgroundAccent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:contentDescription="@null"
+                        android:id="@+id/iButton_toolbarSearch_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/layout_4dp"
+                        android:layout_marginLeft="@dimen/layout_4dp"
+                        android:layout_marginEnd="@dimen/layout_4dp"
+                        android:layout_marginRight="@dimen/layout_4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="@dimen/layout_8dp"
+                        app:srcCompat="@drawable/ic_sort" />
+
+                    <EditText
+                        android:id="@+id/editText_toolbarSearch_enter"
+                        style="@style/AppTheme.EditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/layout_8dp"
+                        android:layout_marginLeft="@dimen/layout_8dp"
+                        android:layout_marginEnd="@dimen/layout_8dp"
+                        android:layout_marginRight="@dimen/layout_8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="flagNoFullscreen|actionDone"
+                        android:inputType="textCapSentences|textAutoCorrect|textAutoComplete"
+                        android:maxLength="@integer/length_search"
+                        android:maxLines="1"
+                        android:textSize="@dimen/text_18sp" />
+
+                    <ImageButton
+                        android:contentDescription="@null"
+                        android:id="@+id/iButton_toolbarSearch_find"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/layout_4dp"
+                        android:layout_marginLeft="@dimen/layout_4dp"
+                        android:layout_marginEnd="@dimen/layout_4dp"
+                        android:layout_marginRight="@dimen/layout_4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable='@{stSearch.enable}'
+                        android:padding="@dimen/layout_8dp"
+                        android:tint='@{stSearch.enable ? @color/colorText : @color/colorTextSecond}'
+                        app:srcCompat="@drawable/ic_search" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</layout>

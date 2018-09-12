@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".app.ui.ActBook">
+
+    <data>
+
+        <import
+            alias="v"
+            type="android.view.View" />
+
+        <import
+            alias="tu"
+            type="android.text.TextUtils" />
+
+        <variable
+            name="itemBook"
+            type="sgtmelon.mukcbs.app.item.ItemBook" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackgroundAccent">
+
+        <include layout="@layout/inc_toolbar" />
+
+        <androidx.core.widget.NestedScrollView
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/layout_8dp"
+                    tools:ignore="UselessParent">
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.title) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_title" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.title) ? "" : itemBook.title}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.place) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_place" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.place) ? "" : itemBook.place}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.pages) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_pages" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.pages) ? "" : itemBook.pages}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.series) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_series" />
+
+                        <TextView
+                            android:id="@+id/tView_itemBook_series"
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.series) ? "" : itemBook.series}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.annotation) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_annotation" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.annotation) ? "" : itemBook.annotation}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.author) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_author" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.author) ? "" : itemBook.author}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.coAuthor) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_co_author" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.coAuthor) ? "" : itemBook.coAuthor}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.editor) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_editor" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.editor) ? "" : itemBook.editor}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.collective) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_collective" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.collective) ? "" : itemBook.collective}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.storage) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_storage" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.storage) ? "" : itemBook.storage}' />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/BookMore.Container"
+                        android:visibility='@{tu.isEmpty(itemBook.hash) ? v.GONE : v.VISIBLE}'>
+
+                        <TextView
+                            style="@style/BookMore.Text.Title"
+                            android:text="@string/book_hash" />
+
+                        <TextView
+                            style="@style/BookMore.Text"
+                            android:text='@{tu.isEmpty(itemBook.hash) ? "" : itemBook.hash}' />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

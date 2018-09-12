@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="v"
+            type="android.view.View" />
+
+        <import
+            alias="text"
+            type="android.text.TextUtils" />
+
+        <variable
+            name="itemBook"
+            type="sgtmelon.mukcbs.app.item.ItemBook" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layout_4dp"
+        app:cardCornerRadius="@dimen/radius_2dp"
+        app:cardBackgroundColor="@color/colorBackgroundAccent">
+
+        <LinearLayout
+            android:id="@+id/itemBook_ll_click"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:padding="@dimen/layout_8dp">
+
+            <TextView
+                style="@style/BookPreview.Text"
+                android:maxLines="1"
+                android:text='@{itemBook.volume == 0 ? @string/book_volume_0 : @string/book_volume_1}' />
+
+            <View
+                style="@style/Divider"
+                android:padding="@dimen/layout_4dp" />
+
+            <LinearLayout
+                style="@style/BookPreview.Container"
+                android:visibility='@{text.isEmpty(itemBook.title) ? v.GONE : v.VISIBLE}'
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.7"
+                    android:maxLines="1"
+                    android:text="@string/book_title" />
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.3"
+                    android:maxLines="3"
+                    android:text='@{text.isEmpty(itemBook.title) ? "" : itemBook.title}' />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/BookPreview.Container"
+                android:visibility='@{text.isEmpty(itemBook.place) ? v.GONE : v.VISIBLE}'
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.7"
+                    android:maxLines="1"
+                    android:text="@string/book_place" />
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.3"
+                    android:maxLines="1"
+                    android:text='@{text.isEmpty(itemBook.place) ? "" : itemBook.place}' />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/BookPreview.Container"
+                android:visibility='@{text.isEmpty(itemBook.annotation) ? v.GONE : v.VISIBLE}'
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.7"
+                    android:maxLines="1"
+                    android:text="@string/book_annotation" />
+
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.3"
+                    android:maxLines="3"
+                    android:text='@{text.isEmpty(itemBook.annotation) ? "" : itemBook.annotation}' />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/BookPreview.Container"
+                android:visibility='@{text.isEmpty(itemBook.author) ? v.GONE : v.VISIBLE}'
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.7"
+                    android:maxLines="1"
+                    android:text="@string/book_author" />
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.3"
+                    android:maxLines="1"
+                    android:text='@{text.isEmpty(itemBook.author) ? "" : itemBook.author}' />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/BookPreview.Container"
+                android:visibility='@{text.isEmpty(itemBook.storage) ? v.GONE : v.VISIBLE}'
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.7"
+                    android:maxLines="1"
+                    android:text="@string/book_storage" />
+
+                <TextView
+                    style="@style/BookPreview.Text"
+                    android:layout_weight="0.3"
+                    android:maxLines="1"
+                    android:text='@{text.isEmpty(itemBook.storage) ? "" : itemBook.storage}' />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
