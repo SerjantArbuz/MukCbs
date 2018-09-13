@@ -8,10 +8,13 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarDark"
-        app:popupTheme="@style/AppTheme.AppBarDark"
+        style="@style/Toolbar"
+        android:theme="@style/AppTheme.AppBar"
+        app:contentInsetEnd="@dimen/layout_8dp"
+        app:contentInsetLeft="@dimen/layout_8dp"
+        app:contentInsetRight="@dimen/layout_8dp"
+        app:contentInsetStart="@dimen/layout_8dp"
+        app:popupTheme="@style/AppTheme.AppBar"
         app:layout_scrollFlags="scroll|enterAlways"/>
 
 </com.google.android.material.appbar.AppBarLayout>

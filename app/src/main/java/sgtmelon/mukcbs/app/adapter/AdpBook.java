@@ -13,25 +13,25 @@ import java.util.List;
 import sgtmelon.mukcbs.R;
 import sgtmelon.mukcbs.databinding.ItemBookBinding;
 import sgtmelon.mukcbs.office.intf.IntfItem;
-import sgtmelon.mukcbs.app.item.ItemBook;
+import sgtmelon.mukcbs.app.model.item.ItemBook;
 
-public class AdapterBook extends RecyclerView.Adapter<AdapterBook.BookHolder> {
+public class AdpBook extends RecyclerView.Adapter<AdpBook.BookHolder> {
 
-    private List<ItemBook> listBook;
+    private List<ItemBook> listBook = new ArrayList<>();
 
-    public AdapterBook() {
-        listBook = new ArrayList<>();
+    public List<ItemBook> getListBook() {
+        return listBook;
+    }
+
+    public void setListBook(List<ItemBook> listBook) {
+        this.listBook.clear();
+        this.listBook.addAll(listBook);
     }
 
     private IntfItem.Click itemClick;
 
     public void setItemClick(IntfItem.Click itemClick) {
         this.itemClick = itemClick;
-    }
-
-    public void updateAdapter(List<ItemBook> listBook) {
-        this.listBook.clear();
-        this.listBook.addAll(listBook);
     }
 
     @NonNull

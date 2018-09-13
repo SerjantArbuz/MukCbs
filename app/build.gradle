@@ -26,6 +26,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    def arch_ver = "2.0.0-beta01"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$arch_ver"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$arch_ver"
+
     def ret_ver = "2.1.0"
     
     implementation "com.squareup.retrofit2:retrofit:$ret_ver"
@@ -33,15 +38,15 @@ dependencies {
 
     def x_ver = "1.0.0-rc02"
 
-    implementation "androidx.appcompat:appcompat:$x_ver"
-    implementation "androidx.cardview:cardview:$x_ver"
+    implementation "com.google.android.material:material:$x_ver"
 
+    implementation "androidx.appcompat:appcompat:$x_ver"
     implementation "androidx.legacy:legacy-support-v4:$x_ver"
+
+    implementation "androidx.cardview:cardview:$x_ver"
 
     implementation "androidx.vectordrawable:vectordrawable:$x_ver"
     implementation "androidx.vectordrawable:vectordrawable-animated:$x_ver"
-
-    implementation "com.google.android.material:material:$x_ver"
 
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'

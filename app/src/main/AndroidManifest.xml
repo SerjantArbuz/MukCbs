@@ -13,8 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="sgtmelon.mukcbs.app.ui.ActMain"
-            android:screenOrientation="portrait">
+            android:name="sgtmelon.mukcbs.app.view.ActMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,8 +21,7 @@
         </activity>
 
         <activity
-            android:name="sgtmelon.mukcbs.app.ui.ActBook"
-            android:screenOrientation="portrait">
+            android:name="sgtmelon.mukcbs.app.view.ActBook">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

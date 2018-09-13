@@ -34,7 +34,8 @@
     </style>
 
     <style name="BookMore.Text.Title">
-        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/layout_4dp</item>
+        <item name="android:layout_marginBottom">@dimen/layout_2dp</item>
     </style>
 
 </resources>

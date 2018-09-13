@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".app.ui.ActBook">
+    tools:context=".app.view.ActBook">
 
     <data>
 
@@ -16,7 +16,7 @@
 
         <variable
             name="itemBook"
-            type="sgtmelon.mukcbs.app.item.ItemBook" />
+            type="sgtmelon.mukcbs.app.model.item.ItemBook" />
 
     </data>
 

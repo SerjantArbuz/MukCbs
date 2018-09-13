@@ -18,15 +18,14 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/AppTheme.AppBarLight"
+            style="@style/Toolbar"
+            android:theme="@style/AppTheme.AppBar"
             app:contentInsetEnd="@dimen/layout_8dp"
             app:contentInsetLeft="@dimen/layout_8dp"
             app:contentInsetRight="@dimen/layout_8dp"
             app:contentInsetStart="@dimen/layout_8dp"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.AppBarLight">
+            app:popupTheme="@style/AppTheme.AppBar">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -52,7 +51,7 @@
 
                     <EditText
                         android:id="@+id/editText_toolbarSearch_enter"
-                        style="@style/AppTheme.EditText"
+                        style="@style/EditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

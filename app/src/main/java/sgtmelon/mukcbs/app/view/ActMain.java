@@ -1,53 +1,50 @@
-package sgtmelon.mukcbs.app.ui;
+package sgtmelon.mukcbs.app.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sgtmelon.mukcbs.R;
-import sgtmelon.mukcbs.app.adapter.AdapterBook;
+import sgtmelon.mukcbs.app.adapter.AdpBook;
+import sgtmelon.mukcbs.app.model.item.ItemBook;
+import sgtmelon.mukcbs.app.viewModel.VmActMain;
 import sgtmelon.mukcbs.databinding.ActMainBinding;
-import sgtmelon.mukcbs.app.data.DataServer;
-import sgtmelon.mukcbs.office.def.DefSearch;
-import sgtmelon.mukcbs.office.st.StSearch;
 import sgtmelon.mukcbs.office.intf.IntfItem;
-import sgtmelon.mukcbs.app.item.ItemBook;
+import sgtmelon.mukcbs.office.st.StSearch;
 
-public class ActMain extends AppCompatActivity implements View.OnClickListener, IntfItem.Click, Toolbar.OnMenuItemClickListener {
-
-    //TODO двухсторонний датабиндинг
-    //TODO вынести логику в ViewModel
-
-    final String TAG = "ActMain";
+public class ActMain extends AppCompatActivity implements View.OnClickListener, IntfItem.Click,
+        Callback<List<ItemBook>> {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    //region Variable
+    private static final String TAG = "ActMain";
+
+    private ActMainBinding binding;
+
+    private VmActMain vm;
+    //endregion
 
     @Override
     protected void onResume() {
@@ -57,11 +54,6 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
         bind();
     }
 
-    private ActMainBinding binding;
-
-    private StSearch stSearch;
-    private DataServer dataServer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,17 +61,22 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
 
         binding = DataBindingUtil.setContentView(this, R.layout.act_main);
 
-        stSearch = new StSearch();
-        dataServer = new DataServer();
+        vm = ViewModelProviders.of(this).get(VmActMain.class);
+        vm.setServerCallback(this);
 
         setupToolbar();
-        setupRecyclerView();
+        setupRecycler();
+
+        if (savedInstanceState != null) {
+            vm.setStSearch(new StSearch(savedInstanceState));
+            updateAdapter();
+        }
     }
 
     private void bind() {
         Log.i(TAG, "bind");
 
-        binding.setStSearch(stSearch);
+        binding.setStSearch(vm.getStSearch());
         binding.executePendingBindings();
     }
 
@@ -88,7 +85,12 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
     private void setupToolbar() {
         Log.i(TAG, "setupToolbar");
 
-        final TextWatcher searchEnterWatcher = new TextWatcher() {
+        searchEnter = findViewById(R.id.editText_toolbarSearch_enter);
+
+        ImageButton searchPlace = findViewById(R.id.iButton_toolbarSearch_place);
+        ImageButton searchFind = findViewById(R.id.iButton_toolbarSearch_find);
+
+        searchEnter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -96,7 +98,12 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                stSearch.setText(searchEnter.getText().toString());
+                String text = searchEnter.getText().toString();
+
+                StSearch stSearch = vm.getStSearch();
+                stSearch.setText(text);
+                vm.setStSearch(stSearch);
+
                 bind();
             }
 
@@ -104,22 +111,10 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
             public void afterTextChanged(Editable editable) {
 
             }
-        };
-
-        searchEnter = findViewById(R.id.editText_toolbarSearch_enter);
-
-        ImageButton searchPlace = findViewById(R.id.iButton_toolbarSearch_place);
-        ImageButton searchFind = findViewById(R.id.iButton_toolbarSearch_find);
-
-        searchEnter.addTextChangedListener(searchEnterWatcher);
+        });
 
         searchPlace.setOnClickListener(this);
         searchFind.setOnClickListener(this);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        return false;
     }
 
     @Override
@@ -129,7 +124,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
         switch (view.getId()) {
             case R.id.iButton_toolbarSearch_place:
                 final String[] checkName = getResources().getStringArray(R.array.search_place);
-                final int[] checkItem = new int[]{stSearch.getPlace()};
+                final int[] checkItem = new int[]{vm.getStSearch().getPlace()};
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
                 alert.setTitle(getString(R.string.dlg_title_place))
@@ -142,7 +137,10 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
                         .setPositiveButton(getString(R.string.dlg_btn_accept), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
+                                StSearch stSearch = vm.getStSearch();
                                 stSearch.setPlace(checkItem[0]);
+                                vm.setStSearch(stSearch);
+
                                 bind();
 
                                 dialog.cancel();
@@ -160,8 +158,10 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
                 dialog.show();
                 break;
             case R.id.iButton_toolbarSearch_find:
+                StSearch stSearch = vm.getStSearch();
                 stSearch.setTextLast();
                 stSearch.setPlaceLast();
+                vm.setStSearch(stSearch);
 
                 bind();
                 updateAdapter();
@@ -170,30 +170,27 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
 
     }
 
-    private List<ItemBook> listBook;
-    private AdapterBook adapterBook;
+    private AdpBook adpBook;
 
-    private void setupRecyclerView() {
-        Log.i(TAG, "setupRecyclerView");
+    private void setupRecycler() {
+        Log.i(TAG, "setupRecycler");
 
         RecyclerView recyclerView = findViewById(R.id.actMain_rv);
 
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayout);
 
-        listBook = new ArrayList<>();
+        adpBook = new AdpBook();
+        recyclerView.setAdapter(adpBook);
 
-        adapterBook = new AdapterBook();
-        recyclerView.setAdapter(adapterBook);
-
-        adapterBook.setItemClick(this);
+        adpBook.setItemClick(this);
     }
 
     @Override
     public void onItemClick(View view, int p) {
         Log.i(TAG, "onItemClick");
 
-        ItemBook itemBook = listBook.get(p);
+        ItemBook itemBook = adpBook.getListBook().get(p);
 
         Intent intent = new Intent(this, ActBook.class);
         intent = itemBook.fillIntent(intent);
@@ -201,37 +198,45 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
         startActivity(intent);
     }
 
-    Callback<List<ItemBook>> serverCallback = new Callback<List<ItemBook>>() {
-        @Override
-        public void onResponse(Call<List<ItemBook>> call, Response<List<ItemBook>> response) {
-            if (response.body() != null) {
-                listBook = response.body();
+    @Override
+    public void onResponse(Call<List<ItemBook>> call, Response<List<ItemBook>> response) {
+        if (response.body() != null) {
+            StSearch stSearch = vm.getStSearch();
+            stSearch.setLoad(false);
+            vm.setStSearch(stSearch);
 
-                stSearch.setLoad(false);
-                bind();
+            bind();
 
-                adapterBook.updateAdapter(listBook);
-                adapterBook.notifyDataSetChanged();
-            }
+            adpBook.setListBook(response.body());
+            adpBook.notifyDataSetChanged();
         }
+    }
 
-        @Override
-        public void onFailure(Call<List<ItemBook>> call, Throwable t) {
-            Toast.makeText(ActMain.this, "An error occurred during networking", Toast.LENGTH_LONG).show();
-        }
-    };
+    @Override
+    public void onFailure(Call<List<ItemBook>> call, Throwable t) {
+        Toast.makeText(ActMain.this, "An error occurred during networking", Toast.LENGTH_LONG).show();
+    }
 
     private void updateAdapter() {
         Log.i(TAG, "updateAdapter");
 
+        StSearch stSearch = vm.getStSearch();
+
         if (stSearch.isAccess()) {
             stSearch.setLoad(true);
-            bind();
+            vm.setStSearch(stSearch);
 
-            dataServer.getApi()
-                    .getData(DefSearch.place_code[stSearch.getPlace()], stSearch.getTextLast())
-                    .enqueue(serverCallback);
+            vm.loadData();
+            bind();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState");
+
+        vm.getStSearch().fillBundle(outState);
     }
 
 }

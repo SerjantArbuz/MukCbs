@@ -14,16 +14,15 @@
 
         <variable
             name="itemBook"
-            type="sgtmelon.mukcbs.app.item.ItemBook" />
+            type="sgtmelon.mukcbs.app.model.item.ItemBook" />
 
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/layout_4dp"
+        style="@style/Card"
         app:cardCornerRadius="@dimen/radius_2dp"
-        app:cardBackgroundColor="@color/colorBackgroundAccent">
+        app:cardBackgroundColor="@color/colorBackgroundAccent"
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:id="@+id/itemBook_ll_click"
