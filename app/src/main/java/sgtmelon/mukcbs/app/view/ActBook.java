@@ -11,30 +11,33 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import sgtmelon.mukcbs.R;
+import sgtmelon.mukcbs.app.model.ItemBook;
 import sgtmelon.mukcbs.app.viewModel.VmActBook;
 import sgtmelon.mukcbs.databinding.ActBookBinding;
+import sgtmelon.mukcbs.office.def.DefIntent;
 
 public class ActBook extends AppCompatActivity {
 
-    //region Variable
-    private static final String TAG = "ActBook";
+    private static final String TAG = ActBook.class.getSimpleName();
 
     private ActBookBinding binding;
-
     private VmActBook vm;
-    //endregion
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
+        super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.act_book);
 
         vm = ViewModelProviders.of(this).get(VmActBook.class);
 
         Bundle bundle = getIntent().getExtras();
-        vm.setValue(bundle == null ? savedInstanceState : bundle);
+        vm.setItemBook(bundle != null
+                ? (ItemBook) bundle.getParcelable(DefIntent.BOOK)
+                : savedInstanceState != null
+                ? (ItemBook) savedInstanceState.getParcelable(DefIntent.BOOK)
+                : null);
 
         setupToolbar();
         bind();
@@ -77,10 +80,10 @@ public class ActBook extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         Log.i(TAG, "onSaveInstanceState");
+        super.onSaveInstanceState(outState);
 
-        vm.getItemBook().fillBundle(outState);
+        outState.putParcelable(DefIntent.BOOK, vm.getItemBook());
     }
 
 }

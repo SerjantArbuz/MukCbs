@@ -13,7 +13,7 @@ import java.util.List;
 import sgtmelon.mukcbs.R;
 import sgtmelon.mukcbs.databinding.ItemBookBinding;
 import sgtmelon.mukcbs.office.intf.IntfItem;
-import sgtmelon.mukcbs.app.model.item.ItemBook;
+import sgtmelon.mukcbs.app.model.ItemBook;
 
 public class AdpBook extends RecyclerView.Adapter<AdpBook.BookHolder> {
 

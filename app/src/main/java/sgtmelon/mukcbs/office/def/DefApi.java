@@ -2,11 +2,11 @@ package sgtmelon.mukcbs.office.def;
 
 import androidx.annotation.StringDef;
 
-@StringDef({DefServer.place, DefServer.text})
-public @interface DefServer {
+@StringDef({DefApi.place, DefApi.text})
+public @interface DefApi {
 
-    String baseUrl = "http://katalog.arhlib.ru";
-    String extraUrl = "/app/search.php";
+    String baseUrl = "http://katalog.arhlib.ru/";
+    String extraUrl = "app/search.php";
 
     String place = "shPlace", text = "shText";
 

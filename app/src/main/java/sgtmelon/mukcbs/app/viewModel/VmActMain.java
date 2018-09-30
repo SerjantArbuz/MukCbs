@@ -4,15 +4,15 @@ import java.util.List;
 
 import androidx.lifecycle.ViewModel;
 import retrofit2.Callback;
-import sgtmelon.mukcbs.app.model.item.ItemBook;
-import sgtmelon.mukcbs.app.model.repo.RepoServer;
-import sgtmelon.mukcbs.office.def.DefServer;
+import sgtmelon.mukcbs.app.model.ItemBook;
+import sgtmelon.mukcbs.app.provider.PrvApi;
+import sgtmelon.mukcbs.office.def.DefApi;
 import sgtmelon.mukcbs.office.st.StSearch;
 
 public class VmActMain extends ViewModel {
 
     private StSearch stSearch = new StSearch();
-    private RepoServer repoServer = new RepoServer();
+    private PrvApi prvApi = new PrvApi();
 
     public StSearch getStSearch() {
         return stSearch;
@@ -29,8 +29,8 @@ public class VmActMain extends ViewModel {
     }
 
     public void loadData(){
-        repoServer.getApi()
-                .getData(DefServer.place_code[stSearch.getPlace()], stSearch.getTextLast())
+        prvApi.getApi()
+                .getData(DefApi.place_code[stSearch.getPlace()], stSearch.getTextLast())
                 .enqueue(serverCallback);
     }
 

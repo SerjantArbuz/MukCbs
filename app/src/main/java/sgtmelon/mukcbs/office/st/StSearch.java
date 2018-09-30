@@ -1,32 +1,47 @@
 package sgtmelon.mukcbs.office.st;
 
-import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import sgtmelon.mukcbs.office.def.DefSearch;
-
-public class StSearch {
+public class StSearch implements Parcelable {
 
     public StSearch() {
 
     }
 
-    public StSearch(Bundle bundle) {
-        load = bundle.getBoolean(DefSearch.load);
-
-        place = bundle.getInt(DefSearch.place);
-        placeLast = bundle.getInt(DefSearch.place_last);
-
-        text = bundle.getString(DefSearch.text);
-        textLast = bundle.getString(DefSearch.text_last);
+    private StSearch(Parcel in) {
+        load = in.readByte() != 0;
+        place = in.readInt();
+        placeLast = in.readInt();
+        text = in.readString();
+        textLast = in.readString();
     }
 
-    public void fillBundle(Bundle outState) {
-        outState.putBoolean(DefSearch.load, load);
-        outState.putInt(DefSearch.place, place);
-        outState.putInt(DefSearch.place_last, placeLast);
-        outState.putString(DefSearch.text, text);
-        outState.putString(DefSearch.text_last, textLast);
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeByte((byte) (load ? 1 : 0));
+        parcel.writeInt(place);
+        parcel.writeInt(placeLast);
+        parcel.writeString(text);
+        parcel.writeString(textLast);
+    }
+
+    public static final Creator<StSearch> CREATOR = new Creator<StSearch>() {
+        @Override
+        public StSearch createFromParcel(Parcel in) {
+            return new StSearch(in);
+        }
+
+        @Override
+        public StSearch[] newArray(int size) {
+            return new StSearch[size];
+        }
+    };
 
     private boolean load = false;
     private int place = 0;
@@ -77,6 +92,5 @@ public class StSearch {
     public boolean isEnable() {
         return !text.equals("") && (!text.equals(textLast) || place != placeLast);
     }
-
 
 }

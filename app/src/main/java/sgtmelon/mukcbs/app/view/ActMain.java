@@ -10,9 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import java.util.List;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -25,39 +22,38 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sgtmelon.mukcbs.R;
 import sgtmelon.mukcbs.app.adapter.AdpBook;
-import sgtmelon.mukcbs.app.model.item.ItemBook;
+import sgtmelon.mukcbs.app.model.ItemBook;
 import sgtmelon.mukcbs.app.viewModel.VmActMain;
 import sgtmelon.mukcbs.databinding.ActMainBinding;
+import sgtmelon.mukcbs.office.def.DefIntent;
 import sgtmelon.mukcbs.office.intf.IntfItem;
 import sgtmelon.mukcbs.office.st.StSearch;
 
-public class ActMain extends AppCompatActivity implements View.OnClickListener, IntfItem.Click,
-        Callback<List<ItemBook>> {
+import java.util.List;
+
+public class ActMain extends AppCompatActivity implements View.OnClickListener, IntfItem.Click, Callback<List<ItemBook>> {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    //region Variable
-    private static final String TAG = "ActMain";
+    private static final String TAG = ActMain.class.getSimpleName();
 
     private ActMainBinding binding;
-
     private VmActMain vm;
-    //endregion
 
     @Override
     protected void onResume() {
-        super.onResume();
         Log.i(TAG, "onResume");
+        super.onResume();
 
         bind();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate");
+        super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.act_main);
 
@@ -68,7 +64,9 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
         setupRecycler();
 
         if (savedInstanceState != null) {
-            vm.setStSearch(new StSearch(savedInstanceState));
+            StSearch stSearch = savedInstanceState.getParcelable(DefIntent.SEARCH);
+            vm.setStSearch(stSearch);
+
             updateAdapter();
         }
     }
@@ -122,7 +120,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
         Log.i(TAG, "onClick");
 
         switch (view.getId()) {
-            case R.id.iButton_toolbarSearch_place:
+            case R.id.iButton_toolbarSearch_place: // TODO: 30.09.2018 диалог
                 final String[] checkName = getResources().getStringArray(R.array.search_place);
                 final int[] checkItem = new int[]{vm.getStSearch().getPlace()};
 
@@ -193,13 +191,15 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
         ItemBook itemBook = adpBook.getListBook().get(p);
 
         Intent intent = new Intent(this, ActBook.class);
-        intent = itemBook.fillIntent(intent);
+        intent.putExtra(DefIntent.BOOK, itemBook);
 
         startActivity(intent);
     }
 
     @Override
     public void onResponse(Call<List<ItemBook>> call, Response<List<ItemBook>> response) {
+        Log.i(TAG, "onResponse");
+
         if (response.body() != null) {
             StSearch stSearch = vm.getStSearch();
             stSearch.setLoad(false);
@@ -214,6 +214,8 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     public void onFailure(Call<List<ItemBook>> call, Throwable t) {
+        Log.i(TAG, "onFailure");
+
         Toast.makeText(ActMain.this, "An error occurred during networking", Toast.LENGTH_LONG).show();
     }
 
@@ -233,10 +235,10 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         Log.i(TAG, "onSaveInstanceState");
+        super.onSaveInstanceState(outState);
 
-        vm.getStSearch().fillBundle(outState);
+        outState.putParcelable(DefIntent.SEARCH, vm.getStSearch());
     }
 
 }
